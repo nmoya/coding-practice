@@ -28,8 +28,8 @@ class TestLinkedList(unittest.TestCase):
         _list = self.list.to_list()
 
         self.assertEqual(_list, tmp)
-        self.assertEqual(_list[0], self.list.first.value)
-        self.assertEqual(_list[-1], self.list.last.value)
+        self.assertEqual(tmp[0], self.list.first.value)
+        self.assertEqual(tmp[-1], self.list.last.value)
         self.assertEqual(self.list.size, len(tmp))
 
     def test_list_reverse(self):
@@ -45,8 +45,8 @@ class TestLinkedList(unittest.TestCase):
         _list = self.list.to_list()
 
         self.assertEqual(_list, tmp)
-        self.assertEqual(_list[0], self.list.first.value)
-        self.assertEqual(_list[-1], self.list.last.value)
+        self.assertEqual(tmp[0], self.list.first.value)
+        self.assertEqual(tmp[-1], self.list.last.value)
         self.assertEqual(initial_size, self.list.size)
 
     def test_list_remove(self):
@@ -129,7 +129,7 @@ class TestStack(unittest.TestCase):
 
     def test_stack_push(self):
         tmp = []
-        for i in range(3):
+        for i in range(30):
             r = random.randint(0, 100)
             self.stack.push(r)
             tmp.append(r)
@@ -161,6 +161,19 @@ class TestStack(unittest.TestCase):
         _list = self.stack.to_list()
         self.assertEqual(_list, tmp)
         self.assertEqual(self.stack.min(), min(tmp))
+        self.assertEqual(self.stack.size, len(tmp))
+
+    def test_stack_push(self):
+        tmp = []
+        for i in range(100):
+            r = random.randint(0, 100)
+            self.stack.push(r)
+            tmp.append(r)
+        tmp.sort()
+        tmp.reverse()
+        self.stack.sort()
+        _list = self.stack.to_list()
+        self.assertEqual(_list, tmp)
         self.assertEqual(self.stack.size, len(tmp))
 
 
@@ -198,7 +211,7 @@ class TestQueueWithStacks(unittest.TestCase):
     def setUp(self):
         self.queue = queuewithstacks.QueueWithStacks()
 
-    def test_queue_enqueue(self):
+    def test_queuestacks_enqueue(self):
         tmp = []
         for i in range(3):
             r = random.randint(0, 100)
@@ -208,7 +221,7 @@ class TestQueueWithStacks(unittest.TestCase):
         self.assertEqual(_list, tmp)
         self.assertEqual(self.queue.size, len(tmp))
 
-    def test_queue_dequeue(self):
+    def test_queuestacks_dequeue(self):
         tmp = []
         for i in range(100):
             r = random.randint(0, 100)

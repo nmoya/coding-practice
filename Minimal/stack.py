@@ -72,6 +72,18 @@ class Stack():
             node = node.next
         return new_stack
 
+    def sort(self):
+    	aux = Stack()
+    	while not self.is_empty():
+    		element = self.pop()
+    		while not aux.is_empty() and aux.top.value > element.value:
+    			aux_element = aux.pop()
+    			self.push(aux_element.value)
+    		aux.push(element.value)
+    	self.top = aux.top
+    	self.size = aux.size
+
+
     def pop(self):
         ''' Returns none if the stack is empty. Removes the node from the top
         of the stack '''
@@ -85,10 +97,9 @@ class Stack():
 
 if __name__ == "__main__":
     s = Stack()
-    for i in range(10):
+    for i in range(10, -1, -1):
         s.push(i)
 
     print s
-
-    s2 = s.inverted_copy()
-    print s2
+    s.sort()
+    print s
