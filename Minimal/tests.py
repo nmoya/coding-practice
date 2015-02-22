@@ -3,6 +3,7 @@ import linkedlist
 import stack
 import queue
 import queuewithstacks
+import binarysearchtree
 import random
 
 
@@ -233,6 +234,29 @@ class TestQueueWithStacks(unittest.TestCase):
         _list = self.queue.to_list()
         self.assertEqual(_list, tmp)
         self.assertEqual(self.queue.size, len(tmp))
+
+
+class TestBinarySearchTree(unittest.TestCase):
+
+    def setUp(self):
+        self.tree = binarysearchtree.BinarySearchTree()
+
+    def test_tree_insert(self):
+        values = [8, 3, 10, 1, 6, 14, 4, 7, 13]
+        for val in values:
+            self.tree.insert(binarysearchtree.Node(val))
+        _list = self.tree.to_list()
+        values.sort()
+        self.assertEqual(_list, values)
+
+    def test_treeheight_dequeue(self):
+        values = [3, 10, 1, 6, 14, 4, 7, 13]
+        self.tree.insert(binarysearchtree.Node(8))
+        self.assertEqual(self.tree.height(), 0)
+        for val in values:
+            self.tree.insert(binarysearchtree.Node(val))
+        values.sort() 
+        self.assertEqual(self.tree.height(), 3)
 
 if __name__ == '__main__':
     unittest.main()

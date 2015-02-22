@@ -57,6 +57,7 @@ class Stack():
         return self.top.min
 
     def invert(self):
+    	''' Inverts the stack '''
         new_stack = Stack()
         while not self.is_empty():
             element = self.pop()
@@ -65,6 +66,7 @@ class Stack():
         self.top = new_stack.top
 
     def inverted_copy(self):
+    	''' Inverts the stack and returns a new stack object '''
         new_stack = Stack()
         node = self.top
         while node is not None:
@@ -73,6 +75,8 @@ class Stack():
         return new_stack
 
     def sort(self):
+    	''' Sort the stack in descending order using only one aux stack. O(N^2)
+    	and O(N) space. '''
     	aux = Stack()
     	while not self.is_empty():
     		element = self.pop()
