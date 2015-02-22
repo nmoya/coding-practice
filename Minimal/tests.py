@@ -11,9 +11,10 @@ class TestLinkedList(unittest.TestCase):
 
     def test_list_insert(self):
         for i in range(10):
-            self.list.insert(i)
+            self.list.append(i)
         _list = self.list.to_list()
         self.assertEqual(_list, range(10))
+        self.assertEqual(self.list.size, 10)
 
     def test_list_insert_ordered(self):
         tmp = []
@@ -23,9 +24,11 @@ class TestLinkedList(unittest.TestCase):
             tmp.append(r)
         tmp.sort()
         _list = self.list.to_list()
+
         self.assertEqual(_list, tmp)
         self.assertEqual(_list[0], self.list.first.value)
         self.assertEqual(_list[-1], self.list.last.value)
+        self.assertEqual(self.list.size, len(tmp))
 
     def test_list_reverse(self):
         tmp = []
@@ -35,15 +38,18 @@ class TestLinkedList(unittest.TestCase):
             tmp.append(r)
         tmp.sort()
         tmp.reverse()
+        initial_size = self.list.size
         self.list.reverse(self.list.first)
         _list = self.list.to_list()
+
         self.assertEqual(_list, tmp)
         self.assertEqual(_list[0], self.list.first.value)
         self.assertEqual(_list[-1], self.list.last.value)
+        self.assertEqual(initial_size, self.list.size)
 
     def test_list_remove(self):
         for i in range(10):
-            self.list.insert(i)
+            self.list.append(i)
         _list = self.list.to_list()
         elements = []
         elements.append(_list[0])
@@ -52,20 +58,25 @@ class TestLinkedList(unittest.TestCase):
         for el in elements:
             self.list.remove(el)
         _list = self.list.to_list()
+
         for el in elements:
             self.assertTrue(el not in _list)
+        self.assertEqual(self.list.size, 10-len(elements))
 
     def test_list_remove_duplicates(self):
-        self.list.insert(1)
-        self.list.insert(1)
-        self.list.insert(2)
-        self.list.insert(2)
-        self.list.insert(3)
-        self.list.insert(3)
-        self.list.insert(3)
+        self.list.append(1)
+        self.list.append(1)
+        self.list.append(2)
+        self.list.append(2)
+        self.list.append(3)
+        self.list.append(3)
+        self.list.append(3)
         self.list.remove_duplicates()
         _list = self.list.to_list()
         self.assertEqual(_list, [1, 2, 3])
+        self.assertEqual(self.list.size, 3)
+        self.assertEqual(self.list.first.value, 1)
+        self.assertEqual(self.list.last.value, 3)
 
 
 class TestStack(unittest.TestCase):

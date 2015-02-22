@@ -41,13 +41,13 @@ class List():
         return _list
 
     def is_empty(self):
-        ''' Returns true if the list is empty. False otherwise '''
+        ''' Returns True if the list is empty. False otherwise '''
         return self.size == 0
 
     def insert_ordered(self, value):
         ''' Insert a node with 'value' in an ordered list '''
         if self.is_empty():
-            self.insert(value)
+            self.append(value)
         else:
             newnode = Node(value)
             if value <= self.first.value:
@@ -67,7 +67,7 @@ class List():
                 newnode.next = curr
             self.size += 1
 
-    def insert(self, value):
+    def append(self, value):
         ''' Insert a node with 'value' at the end of the queue '''
         newnode = Node(value)
         if self.is_empty():
@@ -81,20 +81,37 @@ class List():
     def remove(self, value):
         ''' Removes and return the node with the value. Returns None if
                 the value does not exhist '''
-        previous, curr = None, self.first
-        while curr is not None and curr.value != value:
-            previous = curr
-            curr = curr.next
+        if self.is_empty():
+            return None
 
-        if curr is None:
+        elif self.first.value == value:
+            curr = self.first
+            self.first = self.first.next
+            if self.size == 1:
+                self.last = self.first
+        else:
+            previous, curr = None, self.first
+            while curr is not None and curr.value != value:
+                previous = curr
+                curr = curr.next
+
+            previous.next = curr.next
+            if curr == self.last:
+                self.last = previous
+
+        self.size -= 1
+        return curr
+
+    def remove_first(self):
+        if self.is_empty():
             return None
         else:
+            curr = self.first
+            self.first = self.first.next
+            if self.size == 1:
+                self.last = self.first
             self.size -= 1
-            if self.first != curr:
-                previous.next = curr.next
-            else:
-                self.first = self.first.next
-        return curr
+            return curr
 
     def remove_duplicates(self):
         ''' Removes all values with frequency > 1 leaving only one node '''
