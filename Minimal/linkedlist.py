@@ -90,7 +90,10 @@ class List():
             return None
         else:
             self.size -= 1
-            previous.next = curr.next
+            if self.first != curr:
+                previous.next = curr.next
+            else:
+                self.first = self.first.next
         return curr
 
     def remove_duplicates(self):
