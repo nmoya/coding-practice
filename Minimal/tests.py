@@ -1,6 +1,7 @@
 import unittest
 import linkedlist
 import stack
+import queue
 import random
 
 
@@ -53,7 +54,7 @@ class TestLinkedList(unittest.TestCase):
         _list = self.list.to_list()
         elements = []
         elements.append(_list[0])
-        elements.append(_list[int(len(_list)/2)])
+        elements.append(_list[int(len(_list) / 2)])
         elements.append(_list[-1])
         for el in elements:
             self.list.remove(el)
@@ -61,7 +62,7 @@ class TestLinkedList(unittest.TestCase):
 
         for el in elements:
             self.assertTrue(el not in _list)
-        self.assertEqual(self.list.size, 10-len(elements))
+        self.assertEqual(self.list.size, 10 - len(elements))
 
     def test_list_remove_duplicates(self):
         self.list.append(1)
@@ -93,7 +94,7 @@ class TestStack(unittest.TestCase):
         tmp.reverse()
         _list = self.stack.to_list()
         self.assertEqual(_list, tmp)
-        self.assertEqual(len(_list), len(tmp))
+        self.assertEqual(self.stack.size, len(tmp))
 
     def test_stack_min(self):
         tmp = []
@@ -104,7 +105,6 @@ class TestStack(unittest.TestCase):
         tmp.reverse()
         _list = self.stack.to_list()
         self.assertEqual(self.stack.min(), min(tmp))
-
 
     def test_stack_remove(self):
         tmp = []
@@ -119,6 +119,36 @@ class TestStack(unittest.TestCase):
         _list = self.stack.to_list()
         self.assertEqual(_list, tmp)
         self.assertEqual(self.stack.min(), min(tmp))
+        self.assertEqual(self.stack.size, len(tmp))
+
+
+class TestQueue(unittest.TestCase):
+
+    def setUp(self):
+        self.queue = queue.Queue()
+
+    def test_queue_enqueue(self):
+        tmp = []
+        for i in range(3):
+            r = random.randint(0, 100)
+            self.queue.enqueue(r)
+            tmp.append(r)
+        _list = self.queue.to_list()
+        self.assertEqual(_list, tmp)
+        self.assertEqual(self.queue.size, len(tmp))
+
+    def test_queue_dequeue(self):
+        tmp = []
+        for i in range(100):
+            r = random.randint(0, 100)
+            self.queue.enqueue(r)
+            tmp.append(r)
+        for i in range(50):
+            self.queue.dequeue()
+        tmp = tmp[50:]
+        _list = self.queue.to_list()
+        self.assertEqual(_list, tmp)
+        self.assertEqual(self.queue.size, len(tmp))
 
 if __name__ == '__main__':
     unittest.main()

@@ -15,46 +15,32 @@ class Queue():
         _list = self.start.to_string()
         return ", ".join(_list)
 
+    def to_list(self):
+        return self.start.to_list()
+
     def is_empty(self):
         ''' Returns True if the queue is empty. False otherwise '''
         return self.size == 0
 
     def enqueue(self, value):
         ''' Insert a node with 'value' at the end of the list '''
-        self.start.insert(value)
+        self.start.append(value)
+        self.size += 1
 
     def dequeue(self):
         ''' Removes the first element from the queue '''
-        
-
-
-
-   
+        self.size -= 1
+        return self.start.remove_first()
 
 
 if __name__ == "__main__":
-    l = List()
-    for i in range(5):
-        l.insert(i)
+    q = Queue()
 
-    l.remove(3)
-    l.remove(7)
-
-    l = List()
     for i in range(10):
-        l.insert_ordered(random.randint(0, 100))
+        q.enqueue(i)
+    print q
 
-    print l
-    l.reverse(l.first)
-    print l
-
-    l = List()
-    l.insert(1)
-    l.insert(1)
-    l.insert(2)
-    l.insert(2)
-    l.insert(3)
-    l.insert(3)
-    l.insert(3)
-    l.remove_duplicates()
-    print l
+    print q.dequeue()
+    print q.dequeue()
+    print q.dequeue()
+    print q
