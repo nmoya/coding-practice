@@ -2,6 +2,7 @@ import unittest
 import linkedlist
 import stack
 import queue
+import queuewithstacks
 import random
 
 
@@ -79,7 +80,6 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(self.list.first.value, 1)
         self.assertEqual(self.list.last.value, 3)
 
-
     def test_list_practice(self):
         compare_list = []
 
@@ -100,7 +100,7 @@ class TestLinkedList(unittest.TestCase):
             r = random.randint(-999, 999)
             self.list.append(r)
             compare_list.append(r)
-        _list = self.list.to_list()            
+        _list = self.list.to_list()
         self.assertEqual(_list, compare_list)
         self.assertEqual(compare_list[0], self.list.first.value)
         self.assertEqual(compare_list[-1], self.list.last.value)
@@ -114,8 +114,8 @@ class TestLinkedList(unittest.TestCase):
             else:
                 compare_list = compare_list[1:]
                 self.list.remove_first()
-        
-        _list = self.list.to_list()            
+
+        _list = self.list.to_list()
         self.assertEqual(_list, compare_list)
         self.assertEqual(compare_list[0], self.list.first.value)
         self.assertEqual(compare_list[-1], self.list.last.value)
@@ -168,6 +168,35 @@ class TestQueue(unittest.TestCase):
 
     def setUp(self):
         self.queue = queue.Queue()
+
+    def test_queue_enqueue(self):
+        tmp = []
+        for i in range(3):
+            r = random.randint(0, 100)
+            self.queue.enqueue(r)
+            tmp.append(r)
+        _list = self.queue.to_list()
+        self.assertEqual(_list, tmp)
+        self.assertEqual(self.queue.size, len(tmp))
+
+    def test_queue_dequeue(self):
+        tmp = []
+        for i in range(100):
+            r = random.randint(0, 100)
+            self.queue.enqueue(r)
+            tmp.append(r)
+        for i in range(50):
+            self.queue.dequeue()
+        tmp = tmp[50:]
+        _list = self.queue.to_list()
+        self.assertEqual(_list, tmp)
+        self.assertEqual(self.queue.size, len(tmp))
+
+
+class TestQueueWithStacks(unittest.TestCase):
+
+    def setUp(self):
+        self.queue = queuewithstacks.QueueWithStacks()
 
     def test_queue_enqueue(self):
         tmp = []
