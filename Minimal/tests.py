@@ -80,6 +80,48 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(self.list.last.value, 3)
 
 
+    def test_list_practice(self):
+        compare_list = []
+
+        for i in range(1000):
+            r = random.randint(-999, 999)
+            self.list.insert_ordered(r)
+            compare_list.append(r)
+        tmp = compare_list[::]
+
+        compare_list.sort()
+        _list = self.list.to_list()
+        self.assertEqual(_list, compare_list)
+        self.assertEqual(compare_list[0], self.list.first.value)
+        self.assertEqual(compare_list[-1], self.list.last.value)
+        self.assertEqual(self.list.size, len(compare_list))
+
+        for i in range(1000):
+            r = random.randint(-999, 999)
+            self.list.append(r)
+            compare_list.append(r)
+        _list = self.list.to_list()            
+        self.assertEqual(_list, compare_list)
+        self.assertEqual(compare_list[0], self.list.first.value)
+        self.assertEqual(compare_list[-1], self.list.last.value)
+        self.assertEqual(self.list.size, len(compare_list))
+
+        for i in range(500):
+            if i % 2 == 0:
+                element = random.choice(compare_list)
+                compare_list.remove(element)
+                self.list.remove(element)
+            else:
+                compare_list = compare_list[1:]
+                self.list.remove_first()
+        
+        _list = self.list.to_list()            
+        self.assertEqual(_list, compare_list)
+        self.assertEqual(compare_list[0], self.list.first.value)
+        self.assertEqual(compare_list[-1], self.list.last.value)
+        self.assertEqual(self.list.size, len(compare_list))
+
+
 class TestStack(unittest.TestCase):
 
     def setUp(self):
