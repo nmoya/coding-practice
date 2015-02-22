@@ -62,13 +62,6 @@ class TestLinkedList(unittest.TestCase):
         _list = self.list.to_list()
         self.assertEqual(_list, [1, 2, 3])
 
-class TestQueue(unittest.TestCase):
-
-    def setUp(self):
-        self.queue = []
-
-    def test_simple(self):
-        self.assertEqual(1, 1)
 
 if __name__ == '__main__':
     unittest.main()

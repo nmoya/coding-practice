@@ -5,6 +5,7 @@ import random
 class Node():
 
     def __init__(self, value):
+        ''' A node is composed of a pointer to the next node and an integer '''
         self.next = None
         self.value = value
 
@@ -12,6 +13,8 @@ class Node():
 class List():
 
     def __init__(self):
+        ''' A list holds a pointer to the first and last node. It also
+        keeps track of its size '''
         self.first = None
         self.last = None
         self.size = 0
@@ -38,11 +41,12 @@ class List():
         return _list
 
     def is_empty(self):
+        ''' Returns true if the list is empty. False otherwise '''
         return self.size == 0
 
     def insert_ordered(self, value):
         ''' Insert a node with 'value' in an ordered list '''
-        if self.size == 0:
+        if self.is_empty():
             self.insert(value)
         else:
             newnode = Node(value)
@@ -66,7 +70,7 @@ class List():
     def insert(self, value):
         ''' Insert a node with 'value' at the end of the queue '''
         newnode = Node(value)
-        if self.size == 0:
+        if self.is_empty():
             self.first = newnode
             self.last = newnode
         else:
