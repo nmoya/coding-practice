@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
     g = Graph()
     g.load_graph(graph)
-    g.breadthfs('A')
 
+    g.breadthfs('A')
     print ""
     g.breadthfs('A')
