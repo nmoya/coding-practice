@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import Queue
 
 class Node():
 
@@ -110,11 +111,23 @@ class BinarySearchTree():
         ''' Searches for a key in the tree. O(log n) '''
         return self._search(self.root, key)
 
+    def breadfs(self, start):
+        queue = Queue.Queue()
+        queue.put(start)
+        while not queue.empty():
+            adjacent = queue.get()
+            print adjacent.value
+
+            if adjacent.left is not None:
+                queue.put(adjacent.left)
+            if adjacent.right is not None:
+                queue.put(adjacent.right)
+
 
 if __name__ == "__main__":
     t = BinarySearchTree()
 
-
+    # http://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg
     values = [8, 3, 10, 1, 6, 14, 4, 7, 13]
     for val in values:
         t.insert(Node(val))
@@ -122,6 +135,7 @@ if __name__ == "__main__":
     t.insert(Node(1))
 
     print "Height: ", t.height()
+    t.breadfs(t.root)
     
     # print t.preorder()
     # print t.inorder()
