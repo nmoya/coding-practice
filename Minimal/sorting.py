@@ -71,7 +71,7 @@ def mergesort(array):
 
 def insertionsort(array):
     ''' All the numbers before i are sorted. For each i, traverse with j from 
-    i + 1 until the end. If j < i, swap. That's it. Complexity: O(n^2). '''
+    i until the 0. If the current a[j] < a[j-1], swap. Complexity: O(n^2). '''
     i = 0
     while i < len(array):
         j = i
