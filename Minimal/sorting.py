@@ -53,9 +53,7 @@ def merge(array, aux, lo, mid, hi):
 def _mergesort(array, aux, lo, hi):
     ''' Recursive function that splits the array in half each call and
     recursively sorts each half.'''
-    if hi <= lo:
-        return
-    else:
+    if lo < hi:
         mid = (lo + hi) / 2
         _mergesort(array, aux, lo, mid)
         _mergesort(array, aux, mid + 1, hi)
@@ -75,8 +73,8 @@ def insertionsort(array):
     i = 0
     while i < len(array):
         j = i
-        while j > 0 and array[j] < array[j-1]:
-            array[j-1], array[j] = array[j], array[j-1] 
+        while j > 0 and array[j] < array[j - 1]:
+            array[j - 1], array[j] = array[j], array[j - 1]
             j -= 1
         i += 1
 
@@ -99,14 +97,38 @@ def selectionsort(array):
         i += 1
 
 
+def partition(array, lo, hi):
+    pivot = array[hi]
+    i = lo - 1 
+    j = lo
+    while j <= hi-1:
+        if array[j] <= pivot:
+            i += 1;
+            array[i], array[j] = array[j], array[i]
+        j += 1
+    array[i+1], array[hi] = array[hi], array[i+1]
+    return (i + 1)
+
+
+def _quicksort(array, lo, hi):
+    if lo < hi:
+        pivot = partition(array, lo, hi)
+        _quicksort(array, lo, pivot - 1)
+        _quicksort(array, pivot + 1, hi)
+
+
+def quicksort(array):
+    _quicksort(array, 0, len(array) - 1)
+
+
 if __name__ == "__main__":
     tmp = []
-    for i in range(1000):
+    for i in range(10000):
         tmp.append(random.randint(0, 100))
 
-    insertionsort(tmp)
+    quicksort(tmp)
     print isSorted(tmp)
-    shuffle(tmp)
-    print isSorted(tmp)
-    insertionsort(tmp)
-    print isSorted(tmp)
+    # shuffle(tmp)
+    # print isSorted(tmp)
+    # quicksort(tmp)
+    # print isSorted(tmp)
