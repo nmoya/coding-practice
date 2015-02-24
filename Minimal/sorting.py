@@ -19,16 +19,12 @@ def shuffle(array):
       i += 1
 
 def merge(array, aux, lo, mid, hi):
-    assert (isSorted(array[lo:mid+1]))
-    assert (isSorted(array[mid+1:hi+1]))
-
     k = lo
     while k <= hi:
         aux[k] = array[k]
         k += 1
 
-    k = lo
-    i = lo
+    k = i = lo
     j = mid + 1
     while k <= hi:
         if i > mid:
