@@ -4,6 +4,7 @@ import stack
 import queue
 import queuewithstacks
 import binarysearchtree
+import sorting
 import random
 
 
@@ -257,6 +258,24 @@ class TestBinarySearchTree(unittest.TestCase):
             self.tree.insert(binarysearchtree.Node(val))
         values.sort() 
         self.assertEqual(self.tree.height(), 3)
+
+class TestSorting(unittest.TestCase):
+
+    def setUp(self):
+        self.array = []
+        for i in range(1000):
+            self.array.append(random.randint(-100, 100))
+
+    def test_mergesort(self):
+        correct = self.array[::]
+        correct.sort()
+        sorting.mergesort(self.array)
+        self.assertEqual(self.array, correct)
+
+    def test_shuffle(self):
+        correct = self.array[::]
+        sorting.shuffle(self.array)
+        self.assertNotEqual(self.array, correct)
 
 if __name__ == '__main__':
     unittest.main()

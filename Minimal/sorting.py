@@ -55,15 +55,17 @@ def mergesort(array):
     aux = [0 for i in range(len(array))]
     _mergesort(array, aux, 0, len(array) - 1)
 
+
+
 if __name__ == "__main__":
     tmp = []
-    for i in range(10):
+    for i in range(10000):
         tmp.append(random.randint(0, 100))
 
     mergesort(tmp)
-    print isSorted(tmp), tmp
+    print isSorted(tmp)
     shuffle(tmp)
-    print isSorted(tmp), tmp
+    print isSorted(tmp)
     mergesort(tmp)
     print isSorted(tmp)
 
