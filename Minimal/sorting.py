@@ -73,12 +73,11 @@ def insertionsort(array):
     ''' All the numbers before i are sorted. For each i, traverse with j from 
     i + 1 until the end. If j < i, swap. That's it. Complexity: O(n^2). '''
     i = 0
-    while i < len(array) - 1:
-        j = i + 1
-        while j < len(array):
-            if array[j] < array[i]:
-                array[i], array[j] = array[j], array[i]
-            j += 1
+    while i < len(array):
+        j = i
+        while j > 0 and array[j] < array[j-1]:
+            array[j-1], array[j] = array[j], array[j-1] 
+            j -= 1
         i += 1
 
 
@@ -105,9 +104,9 @@ if __name__ == "__main__":
     for i in range(1000):
         tmp.append(random.randint(0, 100))
 
-    selectionsort(tmp)
+    insertionsort(tmp)
     print isSorted(tmp)
     shuffle(tmp)
     print isSorted(tmp)
-    selectionsort(tmp)
+    insertionsort(tmp)
     print isSorted(tmp)
