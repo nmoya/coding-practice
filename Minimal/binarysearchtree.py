@@ -34,26 +34,6 @@ class BinarySearchTree():
         than the root are on the left, greater on the right '''
         self._insert(self.root, None, newnode)
 
-    def _preorder(self, node):
-        if node is None:
-            return
-        else:
-            print node.value
-            self._preorder(node.left)
-            self._preorder(node.right)
-
-    def preorder(self):
-        ''' Visit the node, go left, and go right '''
-        self._preorder(self.root)
-
-    def _inorder(self, node):
-        if node is None:
-            return
-        else:
-            self._inorder(node.left)
-            print node.value
-            self._inorder(node.right)
-
     def _to_list(self, node, _list):
         if node is None:
             return
@@ -67,21 +47,42 @@ class BinarySearchTree():
         self._to_list(self.root, _list)
         return _list
 
-    def inorder(self):
-        ''' Go left, visit the node and then go right. '''
-        self._inorder(self.root)
-
-    def _posorder(self, node):
+    def _preorder(self, node):
         if node is None:
             return
         else:
-            self._posorder(node.left)
-            self._posorder(node.right)
+            print node.value
+            self._preorder(node.left)
+            self._preorder(node.right)
+
+    def preorder(self):
+        ''' Visit the node, go left, and go right. Same as DFS.'''
+        self._preorder(self.root)
+
+    def _inorder(self, node):
+        if node is None:
+            return
+        else:
+            self._inorder(node.left)
+            print node.value
+            self._inorder(node.right)
+
+    def inorder(self):
+        ''' Go left, visit the node and then go right. Tree sort algorithm'''
+        self._inorder(self.root)
+
+    def _postorder(self, node):
+        if node is None:
+            return
+        else:
+            self._postorder(node.left)
+            self._postorder(node.right)
             print node.value
 
-    def posorder(self):
-        ''' Go left, right and then visit the node '''
-        self._posorder(self.root)
+    def postorder(self):
+        ''' Go left, right and then visit the node. Useful for syntax trees
+        berfore parsing the expression '''
+        self._postorder(self.root)
 
     def _height(self, node):
         if node is None:
@@ -139,7 +140,7 @@ if __name__ == "__main__":
     
     # print t.preorder()
     # print t.inorder()
-    # print t.posorder()
+    # print t.postorder()
 
 
 
