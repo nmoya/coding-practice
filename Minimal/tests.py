@@ -272,6 +272,18 @@ class TestSorting(unittest.TestCase):
         sorting.mergesort(self.array)
         self.assertEqual(self.array, correct)
 
+    def test_insertionsort(self):
+        correct = self.array[::]
+        correct.sort()
+        sorting.insertionsort(self.array)
+        self.assertEqual(self.array, correct)
+
+    def test_selectionsort(self):
+        correct = self.array[::]
+        correct.sort()
+        sorting.selectionsort(self.array)
+        self.assertEqual(self.array, correct)
+
     def test_shuffle(self):
         correct = self.array[::]
         sorting.shuffle(self.array)

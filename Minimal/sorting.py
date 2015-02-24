@@ -56,16 +56,39 @@ def mergesort(array):
     _mergesort(array, aux, 0, len(array) - 1)
 
 
+def insertionsort(array):
+    i = 0
+    while i < len(array) - 1:
+        j = i + 1
+        while j < len(array):
+            if array[j] < array[i]:
+                array[i], array[j] = array[j], array[i]
+            j += 1
+        i += 1
+
+def selectionsort(array):
+    i = 0
+    while i < len(array) - 1:
+        _min, _min_pos = array[i+1], i+1
+        j = i + 2
+        while j < len(array):
+            if array[j] < _min:
+                _min = array[j]
+                _min_pos = j
+            j += 1
+        array[i], array[_min_pos] = _min, array[i]
+        i += 1
+
 
 if __name__ == "__main__":
     tmp = []
-    for i in range(10000):
+    for i in range(1000):
         tmp.append(random.randint(0, 100))
 
-    mergesort(tmp)
+    selectionsort(tmp)
     print isSorted(tmp)
     shuffle(tmp)
     print isSorted(tmp)
-    mergesort(tmp)
+    selectionsort(tmp)
     print isSorted(tmp)
 
