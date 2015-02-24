@@ -272,6 +272,12 @@ class TestSorting(unittest.TestCase):
         sorting.mergesort(self.array)
         self.assertEqual(self.array, correct)
 
+    def test_quicksort(self):
+        correct = self.array[::]
+        correct.sort()
+        sorting.quicksort(self.array)
+        self.assertEqual(self.array, correct)        
+
     def test_insertionsort(self):
         correct = self.array[::]
         correct.sort()
