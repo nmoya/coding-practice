@@ -23,48 +23,45 @@ def shuffle(array):
         i += 1
 
 
-def merge(array, aux, lo, mid, hi):
+def merge(array, lo, mid, hi):
     ''' Merge procedure called inside mergesort. Given a sorted left and
     right array, merge both arrays in a new array of size 
     len(left) + len(right) '''
+    left = array[lo:mid+1]
+    right = array[mid+1:hi+1]
+
     k = lo
-    while k <= hi:
-        aux[k] = array[k]
-        k += 1
-
-    k = i = lo
-    j = mid + 1
-    while k <= hi:
-        if i > mid:
-            array[k] = aux[j]
-            j += 1
-        elif j > hi:
-            array[k] = aux[i]
-            i += 1
-        elif aux[j] <= aux[i]:
-            array[k] = aux[j]
-            j += 1
+    i = j = 0
+    while i < len(left) or j < len(right):
+        if i >= len(left):
+            array[k] = right[j]
+            j+=1
+        elif j >= len(right):
+            array[k] = left[i]
+            i+=1
+        elif left[i] <= right[j]:
+            array[k] = left[i]
+            i+=1
         else:
-            array[k] = aux[i]
-            i += 1
+            array[k] = right[j]
+            j+=1
         k += 1
 
 
-def _mergesort(array, aux, lo, hi):
+def _mergesort(array, lo, hi):
     ''' Recursive function that splits the array in half each call and
     recursively sorts each half.'''
     if lo < hi:
-        mid = (lo + hi) / 2
-        _mergesort(array, aux, lo, mid)
-        _mergesort(array, aux, mid + 1, hi)
-        merge(array, aux, lo, mid, hi)
+        mid = (hi + lo) / 2
+        _mergesort(array, lo, mid)
+        _mergesort(array, mid+1, hi)
+        merge(array, lo, mid, hi)
 
 
 def mergesort(array):
     ''' Just the interface to call _mergesort. Mergesort is O(n log n) time and
     O(n) space. '''
-    aux = [0 for i in range(len(array))]
-    _mergesort(array, aux, 0, len(array) - 1)
+    _mergesort(array, 0, len(array)-1)
 
 
 def insertionsort(array):
@@ -123,10 +120,10 @@ def quicksort(array):
 
 if __name__ == "__main__":
     tmp = []
-    for i in range(10000):
+    for i in range(3):
         tmp.append(random.randint(0, 100))
 
-    quicksort(tmp)
+    mergesort(tmp)
     print isSorted(tmp)
     # shuffle(tmp)
     # print isSorted(tmp)
