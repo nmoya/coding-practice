@@ -125,6 +125,23 @@ class BinarySearchTree():
                 queue.put(adjacent.right)
 
 
+    def largest_element(self, root):
+        if root is not None:
+            if root.right is None:
+                return root.value
+            else:
+                return self.largest_element(root.right)
+
+    def second_largest(self, root, parent):
+        if root is not None:
+            if root.right is None:
+                if root.left is not None:
+                    return self.largest_element(root.left)
+                else:
+                    return parent.value
+            else:
+                return self.second_largest(root.right, root)
+
 if __name__ == "__main__":
     t = BinarySearchTree()
 
@@ -133,11 +150,12 @@ if __name__ == "__main__":
     for val in values:
         t.insert(Node(val))
 
-    t.insert(Node(1))
-
     print "Height: ", t.height()
-    t.breadfs(t.root)
-    
+    # t.breadfs(t.root)
+
+    print t.largest_element(t.root)
+    print t.second_largest(t.root, None)
+
     # print t.preorder()
     # print t.inorder()
     # print t.postorder()
