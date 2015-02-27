@@ -247,8 +247,10 @@ class TestBinarySearchTree(unittest.TestCase):
         for val in values:
             self.tree.insert(binarysearchtree.Node(val))
         _list = self.tree.to_list()
+        _max = max(_list)
         values.sort()
         self.assertEqual(_list, values)
+        self.assertEqual(self.tree.largest_element(self.tree.root), _max)
 
     def test_treeheight_dequeue(self):
         values = [3, 10, 1, 6, 14, 4, 7, 13]
@@ -258,6 +260,7 @@ class TestBinarySearchTree(unittest.TestCase):
             self.tree.insert(binarysearchtree.Node(val))
         values.sort() 
         self.assertEqual(self.tree.height(), 3)
+
 
 class TestSorting(unittest.TestCase):
 

@@ -2,7 +2,22 @@
 import random
 
 
-def isSorted(array):
+def binary_search(array, key):
+    lo = 0
+    hi = len(array)-1
+
+    while lo <= hi:
+        mid = (lo + hi) / 2
+        if array[mid] == key:
+            return mid
+        elif array[mid] > key:
+            hi = mid-1
+        else:
+            lo = mid+1
+    return False
+
+
+def is_sorted(array):
     ''' Checks if the array is sorted. An array is sorted if :
         pass for all i, a[i] < a[j]. Complexity: O(n) '''
     i = 0
@@ -120,12 +135,13 @@ def quicksort(array):
 
 if __name__ == "__main__":
     tmp = []
-    for i in range(3):
+    for i in range(1000):
         tmp.append(random.randint(0, 100))
 
     mergesort(tmp)
-    print isSorted(tmp)
+    print is_sorted(tmp)
+    print binary_search(tmp, 32), 32 in tmp
     # shuffle(tmp)
-    # print isSorted(tmp)
+    # print is_sorted(tmp)
     # quicksort(tmp)
-    # print isSorted(tmp)
+    # print is_sorted(tmp)
