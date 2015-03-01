@@ -3,6 +3,7 @@ import Queue
 import math
 import sys
 
+
 class Node():
 
     def __init__(self, value):
@@ -12,7 +13,9 @@ class Node():
 
 
 class BinarySearchTree():
+
     ''' This tree is unbalanced '''
+
     def __init__(self):
         self.root = None
 
@@ -92,15 +95,15 @@ class BinarySearchTree():
         else:
             left = self._height(node.left)
             right = self._height(node.right)
-            return 1 + max(left, right) 
+            return 1 + max(left, right)
 
     def height(self, node=None):
         ''' Returns the height of the tree. A tree with only the root
         have height 0. '''
         if node is None:
-            return self._height(self.root) - 1
+            return self._height(self.root)
         else:
-            return self._height(node)-1
+            return self._height(node)
 
     def _is_balanced(self, node):
         if node is None:
@@ -121,8 +124,8 @@ class BinarySearchTree():
             return False
 
         if not self._is_bst(node.left, _min, node.value) or \
-            not self._is_bst(node.right, node.value, _max):
-                return False
+                not self._is_bst(node.right, node.value, _max):
+            return False
         return True
 
     def is_bst(self, node=None):
@@ -130,7 +133,6 @@ class BinarySearchTree():
             return self._is_bst(self.root, -sys.maxint, sys.maxint)
         else:
             return self._is_bst(node, -sys.maxint, sys.maxint)
-
 
     def _search(self, node, key):
         if node.value == key:
@@ -159,7 +161,6 @@ class BinarySearchTree():
             if adjacent.right is not None:
                 queue.put(adjacent.right)
 
-
     def largest_element(self, root):
         if root is not None:
             if root.right is None:
@@ -177,6 +178,51 @@ class BinarySearchTree():
             else:
                 return self.second_largest(root.right, root)
 
+    def _tree_level_to_list(self, node, levels_lists, level):
+        if node is None:
+            return
+        else:
+            self._tree_level_to_list(node.left, levels_lists, level + 1)
+            levels_lists[level].append(node.value)
+            self._tree_level_to_list(node.right, levels_lists, level + 1)
+
+    def tree_level_to_list(self):
+        height = self.height()
+        levels_lists = [[] for i in range(height)]
+        self._tree_level_to_list(self.root, levels_lists, 0)
+        return levels_lists
+
+    def is_child(self, node, key):
+        if node is None:
+            return False
+        elif node.value == key:
+            return True
+        else:
+            return self.is_child(node.left, key) or self.is_child(node.right, key)
+
+    def first_common_ancestor(self, node, keyA, keyB):
+        if node is None:
+            return False
+        
+        if node.value == keyA or node.value == keyB:
+            return node
+        else:
+            A_is_on_left = self.is_child(node.left, keyA)
+            B_is_on_left = self.is_child(node.left, keyB)
+
+            if (A_is_on_left != B_is_on_left):
+                return node
+            else:
+                if A_is_on_left:
+                    return self.first_common_ancestor(node.left, keyA, keyB)
+                else:
+                    return self.first_common_ancestor(node.right, keyA, keyB)
+
+
+    def fst_common_ancestor(self, keyA, keyB):
+        return self.first_common_ancestor(self.root, keyA, keyB).value
+
+
 if __name__ == "__main__":
     t = BinarySearchTree()
 
@@ -193,13 +239,9 @@ if __name__ == "__main__":
 
     print t.is_balanced()
     print t.is_bst(t.root)
+    print t.tree_level_to_list()
+    print t.is_child(t.root, 14)
+    print t.fst_common_ancestor(7, 1)
     # print t.preorder()
     # print t.inorder()
     # print t.postorder()
-
-
-
-
-
-
-
