@@ -40,13 +40,31 @@ class Graph():
     def depthfs(self, start):
     	self._depthfs(start, [])
 
+    def are_connected(self, nodeA, nodeB):
+        visited = []
+        queue = Queue.Queue()
+        queue.put(nodeA)
+        visited.append(nodeA)
+
+        while not queue.empty():
+            curr = queue.get()
+            for adj in self.nodes[curr]:
+                if adj not in visited:
+                    visited.append(adj)
+                    if adj == nodeB:
+                        return True
+                    else:
+                        queue.put(adj)
+        return False
+
+
 if __name__ == "__main__":
 
     graph = {'A': ['B', 'C'],
              'B': ['C', 'D'],
              'C': ['D'],
              'D': ['E'],
-             'E': ['F'],
+             'E': ['C'],
              'F': ['C']}
 
     g = Graph()
@@ -55,3 +73,4 @@ if __name__ == "__main__":
     g.breadthfs('A')
     print ""
     g.breadthfs('A')
+    print g.are_connected('A', 'F')

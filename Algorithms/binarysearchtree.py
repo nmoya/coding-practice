@@ -1,5 +1,7 @@
 #!/usr/bin/python
 import Queue
+import math
+import sys
 
 class Node():
 
@@ -10,7 +12,7 @@ class Node():
 
 
 class BinarySearchTree():
-
+    ''' This tree is unbalanced '''
     def __init__(self):
         self.root = None
 
@@ -92,10 +94,43 @@ class BinarySearchTree():
             right = self._height(node.right)
             return 1 + max(left, right) 
 
-    def height(self):
+    def height(self, node=None):
         ''' Returns the height of the tree. A tree with only the root
         have height 0. '''
-        return self._height(self.root) - 1
+        if node is None:
+            return self._height(self.root) - 1
+        else:
+            return self._height(node)-1
+
+    def _is_balanced(self, node):
+        if node is None:
+            return True
+        else:
+            left = self.height(node.left)
+            right = self.height(node.right)
+            return math.fabs(left - right) <= 1
+
+    def is_balanced(self):
+        return self._is_balanced(self.root)
+
+    def _is_bst(self, node, _min, _max):
+        if node is None:
+            return True
+
+        if node.value <= _min or node.value > _max:
+            return False
+
+        if not self._is_bst(node.left, _min, node.value) or \
+            not self._is_bst(node.right, node.value, _max):
+                return False
+        return True
+
+    def is_bst(self, node=None):
+        if node is None:
+            return self._is_bst(self.root, -sys.maxint, sys.maxint)
+        else:
+            return self._is_bst(node, -sys.maxint, sys.maxint)
+
 
     def _search(self, node, key):
         if node.value == key:
@@ -156,6 +191,8 @@ if __name__ == "__main__":
     print t.largest_element(t.root)
     print t.second_largest(t.root, None)
 
+    print t.is_balanced()
+    print t.is_bst(t.root)
     # print t.preorder()
     # print t.inorder()
     # print t.postorder()
