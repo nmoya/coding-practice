@@ -52,7 +52,7 @@ class Graph():
                 if adj not in visited:
                     visited.append(adj)
                     if adj == nodeB:
-                        return True
+                        return True, visited
                     else:
                         queue.put(adj)
         return False
@@ -64,7 +64,7 @@ if __name__ == "__main__":
              'B': ['C', 'D'],
              'C': ['D'],
              'D': ['E'],
-             'E': ['C'],
+             'E': ['F'],
              'F': ['C']}
 
     g = Graph()
