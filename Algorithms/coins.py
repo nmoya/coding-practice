@@ -13,8 +13,7 @@ def nbr_change_possibilities(amount, coins):
             if coin <= value:
 
                 remaining_value = value - coin
-                coins_given_amount[
-                    value] += coins_given_amount[remaining_value]
+                coins_given_amount[value] += coins_given_amount[remaining_value]
 
     return coins_given_amount[amount - 1]
 
@@ -29,8 +28,8 @@ def min_nbr_of_coins(amount, coins):
                 remaining_value = value - coin
                 current = coins_given_amount[remaining_value] + 1
 
-                coins_given_amount[value] = min(
-                    current, coins_given_amount[value])
+                coins_given_amount[value] = min(current,
+                                                coins_given_amount[value])
 
     return coins_given_amount[amount]
 
