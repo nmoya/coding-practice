@@ -15,16 +15,13 @@ class Graph():
         queue = Queue.Queue()
         visited = []
         queue.put(start)
-        visited.append(start)
-        print start
-
         while not queue.empty():
-        	curr = queue.get()
-        	for adj in self.nodes[curr]:
-        		if adj not in visited:
-        			print adj
-        			visited.append(adj)
-        			queue.put(adj)
+            curr = queue.get()
+            if curr not in visited:
+                print curr
+                visited.append(curr)
+            	for adj in self.nodes[curr]:
+            		queue.put(adj)
 
     def _depthfs(self, node, visited):
     	''' Depth First Search in the graph '''
