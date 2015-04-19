@@ -255,11 +255,11 @@ class TestBinarySearchTree(unittest.TestCase):
     def test_treeheight_dequeue(self):
         values = [3, 10, 1, 6, 14, 4, 7, 13]
         self.tree.insert(binarysearchtree.Node(8))
-        self.assertEqual(self.tree.height(), 0)
+        self.assertEqual(self.tree.height(), 1)
         for val in values:
             self.tree.insert(binarysearchtree.Node(val))
         values.sort() 
-        self.assertEqual(self.tree.height(), 3)
+        self.assertEqual(self.tree.height(), 4)
 
 
 class TestSorting(unittest.TestCase):
