@@ -161,12 +161,12 @@ class Event():
 		self.ticket_size                = kargs.get("ticket_size", 5)
 		self.max_value                  = kargs.get("max_value", 75)
 		self.nbr_players                = kargs.get("nbr_players", 30)
-		self.nbr_tickets_special_player = kargs.get("nbr_tickets_special_player", 10)
+		self.nbr_tickets_sp_player 		= kargs.get("nbr_tickets_sp_player", 10)
 		self.avg_tickets_per_player     = kargs.get("avg_tickets_per_player", 2)
 		self.nbr_rounds                 = kargs.get("nbr_rounds", 30)
 
 		self.players = []
-		self.players.append(Player(1, self.nbr_tickets_special_player,
+		self.players.append(Player(1, self.nbr_tickets_sp_player,
 							self.ticket_size, self.max_value))
 		for i in range(2, self.nbr_players):
 			self.players.append(Player(i+2, self.avg_tickets_per_player,
@@ -217,7 +217,7 @@ class Event():
 
 		return special_player_won, self.players[0].wins
 		# print self
-		# sorted_players = sorted(self.players, reverse=True, key=lambda p: p.wins)
+		# sorted_players=sorted(self.players,reverse=True,key=lambda p: p.wins)
 		# for p in sorted_players:
 		# 	if p.wins != 0:
 		# 		print "Player # %d: %f" % (p.id, p.wins / self.nbr_rounds)
@@ -234,8 +234,8 @@ if __name__ == "__main__":
 		if i % 10 == 0:
 			print "Simulating event # %d" % (i)
 		e = Event(id=i, win_condition=random.choice(win_conditions),
-				  nbr_players=30, nbr_tickets_special_player=20,
-				  avg_tickets_per_player=2, nbr_rounds=nbr_rounds)
+				  nbr_players=50, nbr_tickets_sp_player=50,
+				  avg_tickets_per_player=1, nbr_rounds=nbr_rounds)
 
 		aux_wins, aux_rounds = e.simulate()
 		if aux_wins:
