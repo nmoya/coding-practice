@@ -1,6 +1,8 @@
 #################
 ## Eclipse
+
 #################
+a.out
 
 *.pydevproject
 .project
