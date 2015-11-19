@@ -54,15 +54,26 @@ class Graph():
                         queue.put(adj)
         return False
 
+    def topo_sort(self, node, solution):
+        for dep in self.nodes[node]:
+            self.topo_sort(dep, solution)
+        if node not in solution:
+            solution.append(node)
+        return solution
+
+    def topological_sort(self, node):
+        return self.topo_sort(node, [])
 
 if __name__ == "__main__":
 
-    graph = {'A': ['B', 'C'],
+    graph = {'A': ['B', 'C', 'D'],
              'B': ['C', 'D'],
              'C': ['D'],
              'D': ['E'],
-             'E': ['F'],
-             'F': ['C']}
+             'E': ['K', 'I', 'J'],
+             'K': [],
+             'I': ['J'],
+             'J': []}
 
     g = Graph()
     g.load_graph(graph)
@@ -71,3 +82,5 @@ if __name__ == "__main__":
     print ""
     g.breadthfs('A')
     print g.are_connected('A', 'F')
+
+    print g.topological_sort('A')
