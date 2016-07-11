@@ -1,4 +1,4 @@
- # Given a string that contain parentheses (), check if they are balanced.
+ # Given a string that contain parentheses only `(` and `)`, check if the parenthesis are balanced.
 
 def balanced(string):
 	stack = []
@@ -7,19 +7,17 @@ def balanced(string):
 			stack.append(letter)
 		elif letter == ')':
  			if len(stack) > 0:
- 				top = stack.pop()
- 				if top != '(':
-	 				return False
+ 				stack.pop()
 	 		else:
 	 			return False
 	return len(stack) == 0
 
 if __name__ == '__main__':
- 	print balanced("(())")		# True
- 	print balanced("(()())")	# True
- 	print balanced("()(()())")	# True
- 	print balanced("(()")		# False
- 	print balanced("))")		# False
+ 	assert(balanced("(())"))
+ 	assert(balanced("(()())"))
+ 	assert(balanced("()(()())"))
+ 	assert(balanced("(()") == False)
+ 	assert(balanced("))") == False)
 
 
 
