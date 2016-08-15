@@ -1,0 +1,14 @@
+{
+    "Amsterdam": {
+        "attractions": ["Museums", "City Walks", "Sightseeing", "Architecture", "Walking", "Culture", "Nightlife", "Shopping", "Cycling"],
+        "endorsement": [64380, 41419, 37198, 33933, 32707, 32543, 31500, 25756, 24234]
+    },
+    "Lisboa": {
+        "attractions": ["Food", "City Walks", "Old Town", "Sightseeing", "Friendly People", "Architecture", "Culture", "History", "Monuments"],
+        "endorsement": [33060, 32724, 31719, 30543, 26728, 26207, 26070, 26009, 25904]
+    },
+    "Paris": {
+        "attractions": ["Museums", "Sightseeing", "Culture", "Monuments", "Architecture", "Shopping", "History", "Food", "Art"],
+        "endorsement": [84569, 42927, 63457, 58852, 55475, 54666, 47174, 47054, 45947]
+    }
+}
