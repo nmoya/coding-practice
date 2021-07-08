@@ -3,6 +3,9 @@
 
 #################
 a.out
+venv
+.vscode
+.exercism
 
 *.pydevproject
 .project
