@@ -2,9 +2,12 @@ import collections
 from dataclasses import dataclass, field
 from typing import List
 
+import numpy as np
 import torch
+import torchvision
 from matplotlib import pyplot as plt
 from torch import nn
+from torchvision import transforms
 from tqdm import tqdm
 
 
@@ -43,6 +46,30 @@ def try_all_gpus():
 
     Defined in :numref:`sec_use_gpu`"""
     return [gpu(i) for i in range(num_gpus())]
+
+
+def show_images(imgs, num_rows, num_cols, titles=None, scale=1.5):
+    """Plot a list of images.
+
+    Defined in :numref:`sec_utils`"""
+    figsize = (num_cols * scale, num_rows * scale)
+    _, axes = plt.subplots(num_rows, num_cols, figsize=figsize)
+    axes = axes.flatten()
+    for i, (ax, img) in enumerate(zip(axes, imgs)):
+        try:
+            img = np.asanyarray(img)
+        except Exception:
+            print("Error in converting image to numpy.")
+            pass
+        ax.imshow(img)
+        ax.axes.get_xaxis().set_visible(False)
+        ax.axes.get_yaxis().set_visible(False)
+        if titles:
+            ax.set_title(titles[i])
+
+    # Save in file
+    plt.savefig("./ml/debug.png")
+    return axes
 
 
 @dataclass
@@ -118,6 +145,32 @@ class DataModule:
         return self.get_dataloader(train=False)
 
 
+class FashionMNIST(DataModule):  # @save
+    """The Fashion-MNIST dataset."""
+
+    def __init__(self, batch_size=64, resize=(28, 28)):
+        super().__init__()
+        self.batch_size = batch_size
+        self.resize = resize
+        trans = transforms.Compose([transforms.Resize(resize), transforms.ToTensor()])
+        self.train = torchvision.datasets.FashionMNIST(root=self.root, train=True, transform=trans, download=True)
+        self.val = torchvision.datasets.FashionMNIST(root=self.root, train=False, transform=trans, download=True)
+
+    def text_labels(self, indices: List[int]):
+        labels = ["t-shirt", "trouser", "pullover", "dress", "coat", "sandal", "shirt", "sneaker", "bag", "ankle boot"]
+        return [labels[int(i)] for i in indices]
+
+    def get_dataloader(self, train: bool):
+        data = self.train if train else self.val
+        return torch.utils.data.DataLoader(data, self.batch_size, shuffle=train, num_workers=self.num_workers)
+
+    def visualize(self, batch, nrows=1, ncols=8, labels=[]):
+        X, y = batch
+        if not labels:
+            labels = self.text_labels(y)
+        show_images(X.squeeze(1), nrows, ncols, titles=labels)
+
+
 class Module(nn.Module):
     """The base class of models."""
 
@@ -164,6 +217,23 @@ class Module(nn.Module):
 
     def configure_optimizers(self):
         raise NotImplementedError
+
+
+class Classifier(Module):
+    def validation_step(self, batch):
+        Y_hat = self(*batch[:-1])
+        self.plot("loss", self.loss(Y_hat, batch[-1]), train=False)
+        self.plot("acc", self.accuracy(Y_hat, batch[-1]), train=False)
+
+    def configure_optimizers(self):
+        return torch.optim.SGD(self.parameters(), lr=self.lr)
+
+    def accuracy(self, Y_hat, Y, averaged=True):
+        """Compute the number of correct predictions."""
+        Y_hat = Y_hat.reshape((-1, Y_hat.shape[-1]))
+        preds = Y_hat.argmax(axis=1).type(Y.dtype)
+        compare = (preds == Y.reshape(-1)).type(torch.float32)
+        return compare.mean() if averaged else compare
 
 
 class Trainer:
@@ -225,3 +295,9 @@ class Trainer:
             with torch.no_grad():
                 self.model.validation_step(self.prepare_batch(batch))
             self.val_batch_idx += 1
+
+
+if __name__ == "__main__":
+    data = FashionMNIST(resize=(32, 32))
+    batch = next(iter(data.val_dataloader()))
+    data.visualize(batch)
